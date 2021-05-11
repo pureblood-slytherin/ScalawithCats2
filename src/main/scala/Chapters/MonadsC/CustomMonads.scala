@@ -4,7 +4,7 @@ import cats.Monad
 import scala.annotation.tailrec
 import cats.syntax.flatMap._
 import cats.syntax.functor._
-//import cats.instances.option._
+import cats.instances.option._
 import cats.syntax.monad._
 
 
@@ -33,13 +33,13 @@ object CustomMonads extends App{
     retry(a)(f)
   }
 
-  retry(100)(a => if(a == 0) None else Some(a - 1)) // TODO Find why itsn't working
+  retry(100)(a => if(a == 0) None else Some(a - 1))
   //retry(100000)(a => if(a == 0) None else Some(a - 1))
 
   def retryTailRecM[F[_]: Monad, A](start: A)(f: A => F[A]): F[A] = Monad[F].tailRecM(start){ a =>
     f(a).map(a2 => Left(a2)) }
 
-  retryTailRecM(100000)(a => if(a == 0) None else Some(a - 1))
+  println(retryTailRecM(100000)(a => if(a == 0) None else Some(a - 1)))
 
   def retryM[F[_]: Monad, A](start: A)(f: A => F[A]): F[A] =
     start.iterateWhileM(f)(a => true)
