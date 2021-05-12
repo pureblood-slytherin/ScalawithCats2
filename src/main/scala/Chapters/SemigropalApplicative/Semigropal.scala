@@ -62,7 +62,4 @@ object Semigropal extends App{
   val HarryGinny = Harry |+| Ginny
 
 
-
-
-
 }

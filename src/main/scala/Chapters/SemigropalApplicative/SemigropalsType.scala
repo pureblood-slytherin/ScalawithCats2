@@ -53,8 +53,4 @@ object SemigropalsType extends App{
   println((error1, error2).parMapN(addTwo))
   println((sucess1, sucess2).parMapN(addTwo))
 
-
-
-
-
 }
