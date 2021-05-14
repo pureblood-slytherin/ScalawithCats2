@@ -29,4 +29,8 @@ object FoldableExc extends App{
   }
 
   println(filter(List(1, 2, 3))(_ % 2 == 1))
+
+  // Traverse
+
+
 }
