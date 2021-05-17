@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ScalaCompilerConfiguration">
-    <profile name="sbt 1" modules="ScalawithCats2,scalawithcats2">
+    <profile name="sbt 1" modules="scalawithcats2">
+      <parameters>
+        <parameter value="-Xfatal-warnings" />
+      </parameters>
+    </profile>
+    <profile name="sbt 2" modules="ScalawithCats2">
+      <option name="higherKinds" value="true" />
       <parameters>
         <parameter value="-Xfatal-warnings" />
       </parameters>

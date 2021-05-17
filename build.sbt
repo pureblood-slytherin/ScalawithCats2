@@ -8,3 +8,4 @@ libraryDependencies +=
 scalacOptions ++= Seq(
   "-Xfatal-warnings"
 )
+scalacOptions += "-language:higherKinds"
