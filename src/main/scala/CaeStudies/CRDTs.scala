@@ -1,6 +1,10 @@
 package CaeStudies
-
+import cats.instances.list._
 import CaeStudies.CRDTs.wrapper.BoundedSemiLattice
+import cats.instances.map._
+import cats.syntax.semigroup._
+import cats.syntax.foldable._
+import cats.kernel.CommutativeMonoid
 
 
 object CRDTs extends App{
@@ -19,7 +23,7 @@ object CRDTs extends App{
     def total:Int =
       this.counters.values.sum
   }
-  import cats.kernel.CommutativeMonoid
+
   object wrapper{
     trait BoundedSemiLattice[A] extends CommutativeMonoid[A] {
       def combine(a1: A, a2: A): A
@@ -41,7 +45,16 @@ object CRDTs extends App{
   }
 
   case class GCountersGeneric[A](counters: Map[String,A]) {
-    def increment(machine:String,amount: A):GCountersGeneric[A] = ???
+    def increment(machine:String,amount: A)(implicit m: CommutativeMonoid[A]):GCountersGeneric[A] = {
+      val value = amount |+| counters.getOrElse(machine,m.empty)
+      GCountersGeneric(counters+ (machine->value))
+    }
+
+    def merge(that: GCountersGeneric[A])(implicit bsl: BoundedSemiLattice[A]): Map[String,A]={
+      (this.counters |+| that.counters)
+    }
+    def total(implicit m:CommutativeMonoid[A]):A=
+      this.counters.values.toList.combineAll
   }
 
 }
